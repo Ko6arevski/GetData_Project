@@ -32,7 +32,7 @@ You should create one R script called run_analysis.R that does the following.
  
 I will describe the steps I have taken and indicate to which part of the prescribed goal it corresponds
 
-1. Read the data
+Read the data
 
 ```r
 feat<-read.table("./Raw_data/features.txt")
@@ -45,7 +45,7 @@ xTest<-read.table("./Raw_data/test/X_test.txt")
 yTest<-read.table("./Raw_data/test/y_test.txt")
 ```
 
-2. Bindinding the data (part 1)  
+Bindinding the data (part 1)  
 From the above mentioned documentation regarding the raw data, as well as from simply looking at the dimensions of the objects, it was obvious how to bind them. I decided to put the ubject number first and the activity second.
 
 ```r
@@ -54,28 +54,28 @@ trainData<-cbind(cbind(subjectTrain,yTrain),xTrain)
 fullData<-rbind(trainData,testData)
 ```
 
-3.  Assigning variable names (part 4)  
+Assigning variable names (part 4)  
 I decided that it will be more conveniant if I was able to see and use variable names for further computations
 
 ```r
 names(fullData)<-c("Subject", "Activity", as.character(feat$V2))
 ```
 
-4. Giving the activity labels their names (part 3)  
+Giving the activity labels their names (part 3)  
 Again for conveniance I assign the labels to the factor levels of the "Activity" variable.
 
 ```r
 fullData$Activiy<-factor(fullData$Activity, labels=actLabels$V2)
 ```
 
-5. Extracting mean and standard deviation measurements (part 2)  
+Extracting mean and standard deviation measurements (part 2)  
 Now when I have a complete data set I can extract more easily
 
 ```r
 mean_sd_Data<- fullData[,grepl("mean|std|Subject|Activity", names(fullData))]
 ```
 
-6. Creating tidy data set with the average of each variable for each activity and each subject. (part 5) (plyr package needed)
+Creating tidy data set with the average of each variable for each activity and each subject. (part 5) (plyr package needed)
 
 ```r
 library(plyr)
